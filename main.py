@@ -1,30 +1,41 @@
 # Do not modify these lines
-__winc_id__ = '71dd124b4a6e4d268f5973db521394ee'
-__human_name__ = 'strings'
+__winc_id__ = '7b9401ad7f544be2a23321292dd61cb6'
+__human_name__ = 'arguments'
 
 # Add your code after this line
 
-player_1 = "Ruud Gullit"
-player_2 = "Marco van Basten"
+def greet(name, greeting = "Hello, <name>!"):
+    output = greeting.replace("<name>", name)
+    return output
 
-goal_0 = 32
-goal_1 = 54
+print(greet("Eric"))
+print(greet("Eric", "What's up, <name>!"))
 
-scorers = (player_1 + " " + str(goal_0) + ", " +  player_2 + " " + str(goal_1))
-print(scorers)
+planets_dict = {"sun": 274, 
+    "jupiter": 24.9, 
+    "neptune": 11.2, 
+    "saturn": 10.4, 
+    "earth": 9.8, 
+    "uranus": 8.9,
+    "venus": 8.9,
+    "mars": 3.7,
+    "mercury": 3.7,
+    "moon": 1.6,
+    "pluto": 0.6}
 
-report = f'{player_1} scored in the {goal_0}nd minute\n{player_2} scored in the {goal_1}th minute'
-print(report)
+def force(mass, body = "earth"):
+    mass = float(mass)
+    exerted_force = mass * planets_dict[body]
+    return exerted_force
 
-player = 'Hans van Breukelen'
-first_name = player[:player.find(" ")]
-print(first_name)
-last_name = player[player.find(" ") + 1:]
-last_name_len = len(last_name)
-print(last_name_len)
-name_short = ((player[:1] + ".") + " " + last_name)
-print(name_short)
-chant = ((first_name + "! ")  * 4).rstrip(" ")
-print(chant)
-good_chant = (chant != " ")
-print(good_chant)
+print(force(2, "jupiter"))
+
+def pull(m1, m2, d):
+    m1 = float(m1)
+    m2 = float(m2)
+    d = float(d)
+    gravitational_constant = 6.674*10**-11
+    gravitational_pull = gravitational_constant * ((m1 * m2)/d**2)
+    return gravitational_pull
+
+print(pull(800,1500,3))
