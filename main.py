@@ -1,41 +1,41 @@
-# Do not modify these lines
-__winc_id__ = '7b9401ad7f544be2a23321292dd61cb6'
-__human_name__ = 'arguments'
+__winc_id__ = "ae539110d03e49ea8738fd413ac44ba8"
+__human_name__ = "files"
 
-# Add your code after this line
+import os
+import shutil
+import zipfile
+current_dir = os.getcwd() + "\\files"
 
-def greet(name, greeting = "Hello, <name>!"):
-    output = greeting.replace("<name>", name)
-    return output
+def clean_cache():
+    new_dir = os.path.join(current_dir, "cache")
+    if not os.path.exists(new_dir):
+        os.mkdir(new_dir)
+    else:
+        shutil.rmtree(new_dir, ignore_errors=True)
+        os.mkdir(new_dir)
+    return new_dir
 
-print(greet("Eric"))
-print(greet("Eric", "What's up, <name>!"))
+def cache_zip(zip_file_path, cache_dir_path):
+    with zipfile.ZipFile(zip_file_path, "r") as zip_obj:
+        zip_obj.extractall(cache_dir_path)
+        return zip_obj
 
-planets_dict = {"sun": 274, 
-    "jupiter": 24.9, 
-    "neptune": 11.2, 
-    "saturn": 10.4, 
-    "earth": 9.8, 
-    "uranus": 8.9,
-    "venus": 8.9,
-    "mars": 3.7,
-    "mercury": 3.7,
-    "moon": 1.6,
-    "pluto": 0.6}
+def cached_files():
+    list_of_cached_files = []
+    abs_path = os.path.abspath(current_dir + ".\cache")
+    i = os.scandir(abs_path)
+    for entry in i:
+        list_of_cached_files.append(entry.path)
+    return list_of_cached_files
 
-def force(mass, body = "earth"):
-    mass = float(mass)
-    exerted_force = mass * planets_dict[body]
-    return exerted_force
+def find_password(file_list):
+    for file in file_list:
+        with open(file, "r") as f:
+            file_contents = f.readlines()
+            for line in file_contents:
+                if "password" in line:
+                    return (line.strip()[10:])
 
-print(force(2, "jupiter"))
-
-def pull(m1, m2, d):
-    m1 = float(m1)
-    m2 = float(m2)
-    d = float(d)
-    gravitational_constant = 6.674*10**-11
-    gravitational_pull = gravitational_constant * ((m1 * m2)/d**2)
-    return gravitational_pull
-
-print(pull(800,1500,3))
+if __name__ == "__main__":
+    print(current_dir)
+    print(find_password(cached_files()))
